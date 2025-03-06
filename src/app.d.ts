@@ -1,6 +1,11 @@
-// See https://svelte.dev/docs/kit/types#app.d.ts
-// for information about these interfaces
 declare global {
+	interface APIResponse<T = {}> {
+		data: T;
+		error?: {
+			code: number;
+			message: string;
+		};
+	}
 	namespace App {
 		// interface Error {}
 		// interface Locals {}
