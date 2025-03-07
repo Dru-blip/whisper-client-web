@@ -1,6 +1,14 @@
 # Whisper Client
 A modern and user-friendly client for the Whisper API, built with SvelteKit, TypeScript, Tailwind CSS, and DaisyUI.
 
+#### Index
+-   [Technologies](#technologies)
+-   [Prerequisites](#prerequisites)
+-   [Installation](#installation)
+-   [Usage](#usage)
+-   [TODO List](#todo-list)
+-   [Contributing](#contributing)
+
 ## Technologies
 -   **[SvelteKit](https://kit.svelte.dev/):** A framework for building extremely performant web applications.
 -   **[TypeScript](https://www.typescriptlang.org/):** A strongly typed programming language that builds on JavaScript.
