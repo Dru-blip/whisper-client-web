@@ -32,7 +32,13 @@
 		{#if $message}
 			<h3 class:invalid={page.status >= 400}>{$message}</h3>
 		{/if}
-		<input type="hidden" name="id" bind:value={$formId} />
+		<div class="text-center">
+			<h2 class="text-xl font-bold">Login or Signup</h2>
+			<p class="text-sm mt-2 text-gray-500">
+				Enter your email address to receive one time password
+			</p>
+		</div>
+		<input class="mt-4" type="hidden" name="id" bind:value={$formId} />
 		<Field {form} name="email">
 			<Control>
 				{#snippet children({ props })}
@@ -52,7 +58,7 @@
 			{#if $submitting}
 				<Loader2Icon class="animate-spin mx-2" />
 			{/if}
-			Login
+			Continue
 		</button>
 	</form>
 </main>
