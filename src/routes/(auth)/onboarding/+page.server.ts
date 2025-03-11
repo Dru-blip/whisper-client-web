@@ -14,7 +14,7 @@ export const load: PageServerLoad = async ({ url }) => {
 };
 
 export const actions = {
-	default: async ({ request }) => {
+	default: async ({ request, cookies }) => {
 		const form = await superValidate(request, zod(onboardSchema));
 		if (!form.valid) {
 			return fail(400, { form });
@@ -39,6 +39,7 @@ export const actions = {
 		}
 
 		if (responseData.data) {
+			console.log(response.headers.getSetCookie());
 			throw redirect(303, '/chat');
 		}
 	}

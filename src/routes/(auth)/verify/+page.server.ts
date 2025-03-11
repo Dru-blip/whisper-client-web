@@ -4,6 +4,7 @@ import { verifySchema } from './schema';
 import { message, superValidate } from 'sveltekit-superforms';
 import { zod } from 'sveltekit-superforms/adapters';
 import { env } from '$env/dynamic/private';
+import { parseCookie } from '$lib/utils';
 
 export const load: PageServerLoad = async ({ url }) => {
 	const tid = url.searchParams.get('tid');
@@ -27,7 +28,7 @@ export type VerifyResponseData = {
 };
 
 export const actions = {
-	default: async ({ request }) => {
+	default: async ({ request, cookies }) => {
 		const form = await superValidate(request, zod(verifySchema));
 		if (!form.valid) return fail(400, { form });
 		const { otp, cid, u, tid } = form.data;
@@ -42,11 +43,24 @@ export const actions = {
 		const responseData: APIResponse<VerifyResponseData> = await response.json();
 		if (responseData.error) {
 			return message(form, responseData.error.message, {
-				status: responseData.error.code as NumericRange<400, 599>
+				status: <NumericRange<400, 599>>responseData.error.code
 			});
 		}
 		if (responseData.data.onboarding) {
 			throw redirect(300, responseData.data.redirectUrl);
+		} else {
+			const setCookies = response.headers.getSetCookie();
+			setCookies.forEach((cookie) => {
+				const parsedCookie = parseCookie(cookie);
+				cookies.set(parsedCookie.Name, parsedCookie.Value, {
+					path: parsedCookie.Path,
+					secure: parsedCookie.Secure,
+					httpOnly: parsedCookie.HttpOnly,
+					sameSite: parsedCookie.SameSite,
+					maxAge: parsedCookie.MaxAge
+				});
+			});
+			throw redirect(300, '/chat');
 		}
 	}
 } satisfies Actions;
