@@ -1,3 +1,5 @@
 <script lang="ts">
-	console.log('app layout loaded');
+	let { children } = $props();
 </script>
+
+{@render children()}

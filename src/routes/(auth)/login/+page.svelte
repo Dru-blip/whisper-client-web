@@ -28,7 +28,7 @@
 </script>
 
 <main class="min-h-screen flex items-center justify-center">
-	<form method="POST" class="w-[400px] flex flex-col gap-3 p-3" use:enhance>
+	<form method="POST" action="/login?/login" class="w-[400px] flex flex-col gap-3 p-3" use:enhance>
 		{#if $message}
 			<h3 class:invalid={page.status >= 400}>{$message}</h3>
 		{/if}

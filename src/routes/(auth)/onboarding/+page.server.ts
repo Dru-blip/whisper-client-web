@@ -39,7 +39,6 @@ export const actions = {
 		}
 
 		if (responseData.data) {
-			console.log(response.headers.getSetCookie());
 			throw redirect(303, '/chat');
 		}
 	}

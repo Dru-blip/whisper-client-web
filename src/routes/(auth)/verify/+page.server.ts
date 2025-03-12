@@ -46,20 +46,21 @@ export const actions = {
 				status: <NumericRange<400, 599>>responseData.error.code
 			});
 		}
+
+		const setCookies = response.headers.getSetCookie();
+		setCookies.forEach((cookie) => {
+			const parsedCookie = parseCookie(cookie);
+			cookies.set(parsedCookie.Name, parsedCookie.Value, {
+				path: parsedCookie.Path,
+				secure: parsedCookie.Secure,
+				httpOnly: true,
+				sameSite: 'lax'
+			});
+		});
+
 		if (responseData.data.onboarding) {
 			throw redirect(300, responseData.data.redirectUrl);
 		} else {
-			const setCookies = response.headers.getSetCookie();
-			setCookies.forEach((cookie) => {
-				const parsedCookie = parseCookie(cookie);
-				cookies.set(parsedCookie.Name, parsedCookie.Value, {
-					path: parsedCookie.Path,
-					secure: parsedCookie.Secure,
-					httpOnly: parsedCookie.HttpOnly,
-					sameSite: parsedCookie.SameSite,
-					maxAge: parsedCookie.MaxAge
-				});
-			});
 			throw redirect(300, '/chat');
 		}
 	}

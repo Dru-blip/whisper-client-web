@@ -24,7 +24,6 @@ export function parseCookie(cookieString: string): CookieObject {
 		const [key, value] = part.split('=');
 		if (!key) return;
 
-		console.log(value);
 		switch (key.toLowerCase()) {
 			case 'name':
 				cookieData.Name = decodeURIComponent(value || '');

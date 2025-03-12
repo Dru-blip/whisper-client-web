@@ -12,7 +12,21 @@ export const load: PageServerLoad = async () => {
 };
 
 export const actions = {
-	default: async ({ request }) => {
+	logout: async ({ cookies }) => {
+		const sid = cookies.get('sid');
+
+		cookies.delete('sid', { path: '/' });
+		await fetch(`${env.API_URL}/auth/logout`, {
+			method: 'GET',
+			headers: {
+				'Content-Type': 'application/json',
+				Cookie: `sid=${sid}`
+			}
+		});
+
+		throw redirect(301, '/login');
+	},
+	login: async ({ request }) => {
 		const form = await superValidate(request, zod(loginSchema));
 		if (!form.valid) return fail(400, { form });
 		const { email, cid } = form.data;
