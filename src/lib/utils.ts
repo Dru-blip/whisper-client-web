@@ -47,12 +47,10 @@ export function parseCookie(cookieString: string): CookieObject {
 				cookieData.Secure = true;
 				break;
 			case 'httponly':
-				cookieData.HttpOnly = value === 'true';
+				cookieData.HttpOnly = true;
 				break;
 		}
 	});
-
-	console.log(cookieData);
 
 	if (!cookieData.Name || !cookieData.Value) {
 		throw new Error('Invalid cookie data');

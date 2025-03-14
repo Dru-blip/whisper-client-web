@@ -1,6 +1,7 @@
 declare global {
+	type Nullable<T> = T | null;
 	interface APIResponse<T = {}> {
-		data: T;
+		data: Nullable<T>;
 		error?: {
 			code: number;
 			message: string;

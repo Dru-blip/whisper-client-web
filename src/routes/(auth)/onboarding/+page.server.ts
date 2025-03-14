@@ -32,6 +32,7 @@ export const actions = {
 
 		const responseData: APIResponse<{ message: string; user: User }> = await response.json();
 
+		console.log(responseData);
 		if (responseData.error) {
 			return message(form, responseData.error.message, {
 				status: responseData.error?.code as NumericRange<400, 599>
@@ -39,7 +40,7 @@ export const actions = {
 		}
 
 		if (responseData.data) {
-			throw redirect(303, '/chat');
+			throw redirect(303, '/@me');
 		}
 	}
 } satisfies Actions;

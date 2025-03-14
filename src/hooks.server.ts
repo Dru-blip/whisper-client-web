@@ -1,6 +1,6 @@
 import { redirect, type Handle } from '@sveltejs/kit';
 
-const authroutes = ['/login', '/verify', '/onboarding'];
+const authroutes = ['/login', '/verify'];
 
 export const handle: Handle = async ({ event, resolve }) => {
 	const sessionId = event.cookies.get('sid');
@@ -15,11 +15,18 @@ export const handle: Handle = async ({ event, resolve }) => {
 		}
 	}
 
+	if (pathname === '/onboarding') {
+		const token = url.searchParams.get('token');
+		if (!token) {
+			throw redirect(301, '/login');
+		}
+	}
+
 	if (authroutes.includes(pathname)) {
 		if (url.searchParams.has('/logout')) {
 		} else {
 			if (sessionId) {
-				throw redirect(301, '/chat');
+				throw redirect(301, '/@me');
 			}
 			if (pathname === '/verify') {
 				const u = url.searchParams.get('u');
@@ -28,13 +35,6 @@ export const handle: Handle = async ({ event, resolve }) => {
 					throw redirect(301, '/login');
 				}
 			}
-		}
-	}
-
-	if (pathname === '/onboarding') {
-		const token = url.searchParams.get('token');
-		if (!token) {
-			throw redirect(301, '/login');
 		}
 	}
 

@@ -21,10 +21,6 @@ export type VerifyResponseData = {
 	verified: boolean;
 	redirectUrl: string;
 	message: string;
-	tokens: {
-		accessToken: string;
-		refreshToken: string;
-	};
 };
 
 export const actions = {
@@ -53,15 +49,16 @@ export const actions = {
 			cookies.set(parsedCookie.Name, parsedCookie.Value, {
 				path: parsedCookie.Path,
 				secure: parsedCookie.Secure,
-				httpOnly: true,
-				sameSite: 'lax'
+				httpOnly: parsedCookie.HttpOnly,
+				sameSite: 'lax',
+				maxAge: parsedCookie.MaxAge
 			});
 		});
 
 		if (responseData.data.onboarding) {
 			throw redirect(300, responseData.data.redirectUrl);
 		} else {
-			throw redirect(300, '/chat');
+			throw redirect(300, '/@me');
 		}
 	}
 } satisfies Actions;

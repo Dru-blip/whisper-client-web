@@ -1,0 +1,22 @@
+import { env } from '$env/dynamic/private';
+import { queryApi } from '$lib/api';
+import { redirect } from '@sveltejs/kit';
+import type { LayoutServerLoad } from './$types';
+import type { User } from '$lib/types';
+
+export const load: LayoutServerLoad = async ({ cookies }) => {
+	const userInfo = await queryApi<User>({
+		url: `${env.API_URL}/users/@me`,
+		withCredentials: true,
+		headers: {
+			Cookie: `sid=${cookies.get('sid')}`
+		}
+	});
+
+	if (userInfo.error?.code === 401) {
+		throw redirect(301, '/login');
+	}
+	return {
+		user: userInfo.data
+	};
+};
