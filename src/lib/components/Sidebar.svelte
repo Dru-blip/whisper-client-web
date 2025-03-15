@@ -20,7 +20,7 @@
 
 <aside class="flex flex-col justify-between p-2 bg-base-300">
 	<div class="flex flex-col gap-3 items-center">
-		{@render Link('/@me', 'Home', HomeIcon, pathname === '/@me')}
+		{@render Link('/@me', 'Home', HomeIcon, pathname.startsWith('/@me'))}
 		{@render Link('/chats', 'Chats', MessageCircleIcon, pathname === '/chats')}
 		<!-- {@render Link('/friends', 'Friends', UserIcon, false)} -->
 		{@render Link('/notifications', 'Notifications', BellIcon, pathname === '/notifications')}

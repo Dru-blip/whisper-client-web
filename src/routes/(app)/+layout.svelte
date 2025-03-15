@@ -11,7 +11,7 @@
 
 <section class="flex min-h-screen">
 	<Sidebar />
-	<div class="p-2">
+	<div class="w-full">
 		{@render children()}
 	</div>
 </section>

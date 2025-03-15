@@ -1,15 +1,12 @@
 @import 'tailwindcss';
 @plugin '@tailwindcss/forms';
 @plugin '@tailwindcss/typography';
-/* @plugin "daisyui"; */
+@plugin "daisyui";
 @plugin "daisyui" {
-	themes:
-		light --default,
-		silk;
-	/* themes: light --default; */
+	themes: light --default;
 }
 
-/* @plugin "daisyui/theme" {
+@plugin "daisyui/theme" {
 	name: 'light';
 	default: false;
 	prefersdark: false;
@@ -42,4 +39,4 @@
 	--border: 1px;
 	--depth: 1;
 	--noise: 0;
-} */
+}
