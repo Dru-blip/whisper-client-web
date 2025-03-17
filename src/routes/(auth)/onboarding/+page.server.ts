@@ -32,7 +32,7 @@ export const actions = {
 
 		const responseData: APIResponse<{ message: string; user: User }> = await response.json();
 
-		console.log(responseData);
+		// console.log(responseData);
 		if (responseData.error) {
 			return message(form, responseData.error.message, {
 				status: responseData.error?.code as NumericRange<400, 599>
