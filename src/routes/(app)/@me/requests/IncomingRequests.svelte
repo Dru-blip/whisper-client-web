@@ -20,9 +20,13 @@
 					'Content-Type': 'application/json'
 				}
 			});
-			const data: APIResponse<{ friend: Friend }> = await response.json();
+			const data: APIResponse<Friend> = await response.json();
 			if (data.data) {
-				friends.received.push(data.data.friend);
+				friends.received.push(data.data);
+				const filteredRequests = friendRequests.incomingFriendRequests.filter(
+					(request) => request.id !== requestId
+				);
+				friendRequests.incomingFriendRequests = [...filteredRequests];
 			}
 		} catch (error) {
 			console.error(error);

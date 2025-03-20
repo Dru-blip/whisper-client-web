@@ -12,7 +12,10 @@
 	let { children, data } = $props();
 
 	let user = $state(data.user);
-	let friendRequests = $state(data.friendRequests);
+	let friendRequests = $state({
+		incomingFriendRequests: data.friendRequests.incomingFriendRequests ?? [],
+		outgoingFriendRequests: data.friendRequests.outgoingFriendRequests ?? []
+	});
 	let friends = $state({
 		initiated: user.initiatedFriendships ?? [],
 		received: user.receivedFriendships ?? []
