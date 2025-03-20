@@ -26,8 +26,8 @@ export interface Friend {
 	updatedAt: Date;
 }
 
-export type InitiatedFriendShips = Friend[];
-export type ReceivedFriendShips = Friend[];
+export type InitiatedFriendships = Friend[];
+export type ReceivedFriendships = Friend[];
 
 export type FriendRequests = {
 	incomingFriendRequests: FriendRequest[];

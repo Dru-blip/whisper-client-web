@@ -1,6 +1,7 @@
 <script lang="ts">
 	import { enhance } from '$app/forms';
 	import { PUBLIC_API_URL } from '$env/static/public';
+	import UserAvatar from '$lib/components/UserAvatar.svelte';
 	import type { User } from '$lib/types';
 	import { Loader2Icon, UserPlusIcon } from 'lucide-svelte';
 
@@ -30,20 +31,7 @@
 
 <li class="flex items-center justify-between p-2">
 	<div class="flex items-center gap-3">
-		{#if user.profilePicture}
-			<div class="avatar"></div>
-		{:else}
-			<div class="avatar avatar-placeholder">
-				<div class="bg-base-100 text-neutral-content w-12 rounded-full">
-					<span
-						>{user.name
-							.split(' ')
-							.map((char) => char[0].toUpperCase())
-							.join('')}</span
-					>
-				</div>
-			</div>
-		{/if}
+		<UserAvatar {user} />
 
 		<div class="text-md font-bold">
 			{user.name}

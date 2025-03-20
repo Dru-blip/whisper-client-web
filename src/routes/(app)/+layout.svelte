@@ -7,14 +7,19 @@
 	import { setSocketContext } from '$lib/stores/socket-store.svelte';
 	import { setFriendRequestsContext } from '$lib/stores/fr-store.svelte';
 	import type { ClientToServerEvents, FriendRequest, ServerToClientEvents } from '$lib/types';
+	import { setFriendsContext } from '$lib/stores/friends.svelte';
 
 	let { children, data } = $props();
 
 	let user = $state(data.user);
 	let friendRequests = $state(data.friendRequests);
-
+	let friends = $state({
+		initiated: user.initiatedFriendships ?? [],
+		received: user.receivedFriendships ?? []
+	});
 	setUserContext(user);
 	setFriendRequestsContext(friendRequests);
+	setFriendsContext(friends);
 
 	let socket = $state<Nullable<Socket>>(null);
 
@@ -27,7 +32,6 @@
 	};
 
 	const handleReceiveFriendRequest = (data: { friendRequest: FriendRequest }) => {
-		console.log(data);
 		friendRequests.incomingFriendRequests.push(data.friendRequest);
 	};
 

@@ -3,10 +3,15 @@ import { getContext, setContext } from 'svelte';
 
 const FRIENDS_STORE = Symbol('friends');
 
-export const setFriendsContext = (friends: Nullable<Friend[]>) => {
+type Friendships = {
+	initiated: Friend[];
+	received: Friend[];
+};
+
+export const setFriendsContext = (friends: Nullable<Friendships>) => {
 	setContext(FRIENDS_STORE, friends);
 };
 
 export const getFriendsContext = () => {
-	return getContext<Friend[]>(FRIENDS_STORE);
+	return getContext<Friendships>(FRIENDS_STORE);
 };

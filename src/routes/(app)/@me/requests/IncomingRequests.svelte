@@ -22,7 +22,7 @@
 			});
 			const data: APIResponse<{ friend: Friend }> = await response.json();
 			if (data.data) {
-				friends.push(data.data.friend);
+				friends.received.push(data.data.friend);
 			}
 		} catch (error) {
 			console.error(error);
