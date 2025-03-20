@@ -6,11 +6,13 @@
 	import { io, Socket } from 'socket.io-client';
 	import { setSocketContext } from '$lib/stores/socket-store.svelte';
 	import { setFriendRequestsContext } from '$lib/stores/fr-store.svelte';
+	import type { ClientToServerEvents, FriendRequest, ServerToClientEvents } from '$lib/types';
 
 	let { children, data } = $props();
 
 	let user = $state(data.user);
 	let friendRequests = $state(data.friendRequests);
+
 	setUserContext(user);
 	setFriendRequestsContext(friendRequests);
 
@@ -24,15 +26,19 @@
 		console.log('Disconnected from server');
 	};
 
-	const handleReceiveFriendRequest = (data: any) => {
-		console.log('Received friend request:', data);
+	const handleReceiveFriendRequest = (data: { friendRequest: FriendRequest }) => {
+		console.log(data);
+		friendRequests.incomingFriendRequests.push(data.friendRequest);
 	};
 
 	onMount(() => {
-		const socket = io('ws://localhost:5000', { withCredentials: true, transports: ['websocket'] });
+		const socket: Socket<ServerToClientEvents, ClientToServerEvents> = io('ws://localhost:5000', {
+			withCredentials: true,
+			transports: ['websocket']
+		});
 		socket.on('connect', onConnect);
 		socket.on('disconnect', onDisconnect);
-		socket.on('friendRequest:recieve', handleReceiveFriendRequest);
+		socket.on('friendRequest:receive', handleReceiveFriendRequest);
 		socket.on('connect_error', (err) => {
 			console.log(`connect_error due to ${err.message}`);
 		});

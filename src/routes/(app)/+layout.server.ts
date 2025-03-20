@@ -2,10 +2,15 @@ import { env } from '$env/dynamic/private';
 import { queryApi } from '$lib/api';
 import { redirect } from '@sveltejs/kit';
 import type { LayoutServerLoad } from './$types';
-import type { FriendRequests, User } from '$lib/types';
+import type { FriendRequests, InitiatedFriendShips, ReceivedFriendShips, User } from '$lib/types';
 
 export const load: LayoutServerLoad = async ({ cookies }) => {
-	const userInfo = await queryApi<User & FriendRequests>({
+	const userInfo = await queryApi<
+		User &
+			FriendRequests & { initiatedFriendShips: InitiatedFriendShips } & {
+				receivedFriendShips: ReceivedFriendShips;
+			}
+	>({
 		url: `${env.API_URL}/users/@me`,
 		withCredentials: true,
 		headers: {
